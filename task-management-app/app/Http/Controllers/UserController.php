@@ -68,13 +68,45 @@ class UserController extends Controller
 
         } catch (Exception $e) {
             $status = 'failed';
-            $message = 'Gagal Menjalankan Request '. $e->getMessage();
+            $message = 'Gagal Menjalankan Request ' . $e->getMessage();
             $status_code = 500;
         } finally {
             return response()->json([
                 'status' => $status,
                 'message' => $message,
                 'data' => $data
+            ], $status_code);
+        }
+    }
+
+    public function destroyProfile(Request $request, $id)
+    {
+        $status = '';
+        $message = '';
+        $data = null;
+        $status_code = 200;
+
+        try {
+            $user = User::findOrFail($id);
+            if ($user) {
+                $user->delete();
+                $message = 'Data Berhasil Dihapus';
+                $status_code = 200;
+            } else {
+                $message = 'Data tidak ditemukan';
+                $status_code = 404;
+            }
+            $status = 'success';
+            $data = $user;
+            $status_code = 200;
+        } catch (Exception $e) {
+            $status = 'failed';
+            $message = 'Gagal Menjalankan Request' . $e->getMessage();
+            $status_code = 500;
+        } finally {
+            return response()->json([
+                'status' => $status,
+                'message' => $message
             ], $status_code);
         }
     }
