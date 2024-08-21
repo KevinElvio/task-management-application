@@ -3,6 +3,7 @@
 use App\Http\Controllers\auth\LoginController;
 use App\Http\Controllers\auth\RegisterController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,5 +27,7 @@ Route::post("register", [RegisterController::class,"register"]);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post("logout", [LogoutController::class,"logout"]);
+    Route::get("profile", [UserController::class,"getProfile"]);
+    Route::put("profile/{id}", [UserController::class,"updateProfile"]);
 });
 
