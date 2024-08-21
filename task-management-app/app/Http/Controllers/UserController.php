@@ -50,13 +50,17 @@ class UserController extends Controller
 
         try {
             $user = User::findOrFail($id);
+            $validatedData = $request->validate([
+                'email' => 'required|string|unique:users',
+                'name' => 'required|string|unique:users',
+                'avatar' => 'required|string',
+            ]);
+            $user->update([
+                'email' => $validatedData['email'],
+                'name' => $validatedData['name'],
+                'avatar' => $validatedData['avatar']
+            ]);
             if ($user) {
-                $user->update([
-                    'name' => $request['name'],
-                    'email' => $request['email'],
-                    'avatar' => $request['avatar'],
-
-                ]);
                 $message = 'Berhasil Memperbaharui Data';
                 $status_code = 201;
             } else {
