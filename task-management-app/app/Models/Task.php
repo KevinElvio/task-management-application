@@ -5,12 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use SebastianBergmann\CodeCoverage\Report\Xml\Project;
 
 class Task extends Model
 {
     protected $fillable = [
-        "name",
-        "description"
+        'name',
+        'description',
+        'project_id', 
+        'user_id'
     ];
 
     public function user(): BelongsTo {
